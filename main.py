@@ -2,7 +2,7 @@ import time
 import os
 from cftools.tools.LIBzek import NDEC, NENC
 from cftools.tools import LIBzx
-
+import sys
 try:
     import flet as ft
 except:
@@ -91,16 +91,35 @@ def main(page: ft.Page) -> None:
 
                         if not found:
                             r.controls.append(
-                                ft.Text("Результотов нету. Попробуйте что нибудь другое", color=ft.colors.CYAN,
+                                ft.Text("Результатов нету. Попробуйте что нибудь другое", color=ft.colors.CYAN,
                                         width=150)
                             )
                     else:
                         upd()
+                def logout(e):
+                    text_login.value = ""
+                    text_pass.value = ""
+                    page.clean()
+                    page.add(
+                        Row(
+                            controls=[
+                                Column(
+                                    [
+                                        text_login,
+                                        text_pass,
+                                        Checkbox_login,
+                                        button_sub,
+                                        regGo]
+                                )
+                            ], alignment=ft.MainAxisAlignment.CENTER
+                        )
+                    )
+                    page.window_resizable = False
 
                 finda = ft.TextField(width=1100, hint_text="Поиск по приложениям / сайтам", on_change=find)
 
                 page.add(ft.Row(controls=[finda]))
-                page.window_width = 1135
+                page.window_width = 1335
                 spc = 0
                 r = ft.Row(wrap=True, scroll="always", expand=True)
                 page.window_height = 800
@@ -173,9 +192,10 @@ def main(page: ft.Page) -> None:
 
                 upd()
 
-                send = ft.ElevatedButton(text="Add", on_click=on_clk, height=50, width=150, bgcolor=ft.colors.BLUE)
+                send = ft.ElevatedButton(text="Добавить", on_click=on_clk, height=50, width=150, bgcolor=ft.colors.BLUE)
+                but = ft.ElevatedButton(text='Выйти', on_click=logout, height=50, width=150, bgcolor=ft.colors.BLUE)
 
-                page.add(ft.Row(controls=[field_1, field_2, field_3, send]))
+                page.add(ft.Row(controls=[field_1, field_2, field_3, send, but]))
                 page.update()
         else:
             if call != True:
