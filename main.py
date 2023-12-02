@@ -22,6 +22,12 @@ from flet_core.control_event import ControlEvent
 
 os.environ["FLET_WS_MAX_MESSAGE_SIZE"] = "8000000"
 
+try:
+    f=open("CLients.txt","r+")
+    f.close()
+except IOError:
+    f = open("CLients.txt", "w+")
+    f.close()
 
 def copy(nm):
     def copys(e):
